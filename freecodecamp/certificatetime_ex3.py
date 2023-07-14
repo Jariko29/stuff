@@ -6,18 +6,22 @@ class Category:
         self.temp = dict()
 
     def deposit(self, money, descreption=''):
-        temp = {"amount": money, "description": descreption}
+        if(len(descreption) > 23):
+            descreption = descreption[:23]
+        temp = {"amount": money, "descreption": descreption}
         self.summ += money
         self.ledger.append(temp)
 
     def withdraw(self, money, descreption=''):
+        if(len(descreption) > 23):
+            descreption = descreption[:23]
         money = '{:.2f}'.format(money)
         money = float(money)
         if (self.check_funds(money) == False):
             return False
         else:
             self.summ -= money
-            temp = {"amount": -money, "description": descreption}
+            temp = {"amount": -money, "descreption": descreption}
             self.ledger.append(temp)
             return True
 
@@ -47,29 +51,26 @@ class Category:
         print(othoni, '\a')
         for i in range(len(self.ledger)):
             print('{:<23}{:>7}'.format(
-                self.ledger[i]['description'], self.ledger[i]['amount']))
+                self.ledger[i]['descreption'], self.ledger[i]['amount']))
         print('Total: {:.2f}'.format(self.summ))
 
 
 test = Category('Food')
-test2 = Category('Clothes')
-test3 = Category('Errands')
+test2 = Category('Entertainment')
+test3 = Category('Business')
 
-test.deposit(100, 'initial deposit')
-test2.deposit(18.21, 'initial deposit')
-test3.deposit(50, 'initial deposit')
-test.withdraw(19.20, 'Patixa')
-test3.withdraw(25, 'revma')
-test.transfer(50, test2)
+test.deposit(900, "milk, cereal, eggs, bacon, bread")
+test2.deposit(900, "deposit")
+test3.deposit(900, "deposit")
+test.withdraw(105.55)
+test2.withdraw(33.40)
+test3.withdraw(10.99)
 test.get_balance()
-test2.get_balance()
 
-print(test.get_balance)
 def create_spend_chart(categories):
     lista = []
     listaname = []
     summ = 0
-    count = 0
     for i in range(len(categories)):
         lista.append(categories[i].name)
         for j in range(len(categories[i].ledger)):
@@ -77,6 +78,7 @@ def create_spend_chart(categories):
                 lista.append(categories[i].ledger[j]['amount'])
                 summ += categories[i].ledger[j]['amount']
     summ = abs(summ)
+    print(lista)
     for i in range(len(lista)):
         try:
             if(lista[i].isalpha() == True):
@@ -86,7 +88,7 @@ def create_spend_chart(categories):
             if(temp >= 100):
                 lista[i] = int((temp // 10*10)/10)
             else:
-                lista[i] = int((temp // 10*10)/10 + 1)
+                lista[i] = int((temp // 10*10)/10)
     arithmoi = [i for i in range(0,110,10)]
     listanum = []
     temp = 0
@@ -109,7 +111,7 @@ def create_spend_chart(categories):
             temp += lista[i+1]
             if(i == len(lista) - 2):
                 listanum.append(temp)
-                
+    print(lista)  
     print('Percentage spent by category')
     for i in range(len(arithmoi)):
         grammi = ''
@@ -137,4 +139,4 @@ def create_spend_chart(categories):
     
             
 
-create_spend_chart([test,test2,test3])
+create_spend_chart([test3,test,test2])
