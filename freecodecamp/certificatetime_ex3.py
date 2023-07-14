@@ -94,9 +94,9 @@ def create_spend_chart(categories):
     for i in range(len(arithmoi)):
         keno = '  '
         kiklos = ' '
-        for i in range(count)
+        for i in range(count):
             if(lista[count]):
-        print('{:>3}| {}  '.format(arithmoi[len(arithmoi)-1-i],kiklos))
+        print('{:>3}|  '.format(arithmoi[len(arithmoi)-1-i],kiklos))
     print(lista)
     
     
