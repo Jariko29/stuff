@@ -6,15 +6,11 @@ class Category:
         self.temp = dict()
 
     def deposit(self, money, descreption=''):
-        if(len(descreption) > 23):
-            descreption = descreption[:23]
         temp = {"amount": money, "descreption": descreption}
         self.summ += money
         self.ledger.append(temp)
 
     def withdraw(self, money, descreption=''):
-        if(len(descreption) > 23):
-            descreption = descreption[:23]
         money = '{:.2f}'.format(money)
         money = float(money)
         if (self.check_funds(money) == False):
@@ -28,9 +24,10 @@ class Category:
     def get_balance(self):
         print('{:.2f}'.format(self.summ))
 
+
     def transfer(self, money, goto):
         to = 'Transfer to ' + str(goto.name)
-        if (self.withdraw(money, to) == True):
+        if(self.withdraw(money, to) == True):
             fromm = 'Transfer from ' + str(self.name)
             goto.deposit(money, fromm)
             return True
@@ -44,29 +41,31 @@ class Category:
             return True
 
     def __del__(self):
-        telies = '*' * int((30/2-len(str(self.name))/2))
-        othoni = ('{0}{1}{2}'.format(telies, self.name, telies))
-        if (len(othoni) < 30):
-            othoni = '*' + othoni
-        print(othoni, '\a')
+        actual = ''
+        othoni = ('{:*^30}\n'.format(self.name))
+        actual += othoni
         for i in range(len(self.ledger)):
-            print('{:<23}{:>7}'.format(
-                self.ledger[i]['descreption'], self.ledger[i]['amount']))
-        print('Total: {:.2f}'.format(self.summ))
+            desc = '{:<23}'.format(self.ledger[i]['descreption'][:23])
+            amoun = '{:>7.2f}'.format(self.ledger[i]['amount'])
+            actual += '{}{}\n'.format(desc,amoun)
+        actual += 'Total: {:.2f}\n'.format(self.summ)
+        print(actual)
+        return actual
 
 
 test = Category('Food')
 test2 = Category('Entertainment')
 test3 = Category('Business')
 
-test.deposit(900, "milk, cereal, eggs, bacon, bread")
+test.deposit(900, "deposit")
 test2.deposit(900, "deposit")
 test3.deposit(900, "deposit")
-test.withdraw(105.55)
+
+test.withdraw(45.67,'milk, cereal, eggs, bacon, bread')
 test2.withdraw(33.40)
 test3.withdraw(10.99)
-test.get_balance()
-
+test.transfer(20,test2)
+test2.get_balance()
 def create_spend_chart(categories):
     lista = []
     listaname = []

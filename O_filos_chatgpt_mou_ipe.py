@@ -1,2 +1,3 @@
-temp = '2452316513218974108048'
-print(temp[:23],'kk')
+num = 2
+formatted_num = "{:.2f}".format(num)
+print(formatted_num)  # Output: 2.10
