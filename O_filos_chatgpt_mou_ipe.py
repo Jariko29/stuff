@@ -1,3 +1,4 @@
-num = 2
-formatted_num = "{:.2f}".format(num)
-print(formatted_num)  # Output: 2.10
+temp = {'yellow': 4,'brown' : 3}
+lista = []
+lista.append(temp)
+print(lista)

@@ -37,33 +37,45 @@ class Rectangle(object):
         if(kouti.width > self.width or kouti.height > self.height):
             return tempw
         else:
-            for i in range(self.width):
-                if(kouti.width + i < self.width):
+            for i in range(0,self.width,kouti.width):
+                if(kouti.width + i <= self.width):
                     tempw += 1
-            for i in range(self.height):
-                if(kouti.height + i < self.height):
+                else:
+                    break
+            for i in range(0,self.height,kouti.height):
+                if(kouti.height + i <= self.height):
                     temph += 1      
+                else:
+                    break
             return tempw * temph
 
 class Square(Rectangle):
     def __init__(self,plevra) -> None:
+        Rectangle.__init__(self,plevra,plevra)
         self.side = plevra
-        Rectangle.__init__(self,w=plevra,h=plevra)
         
     def __str__(self) -> str:
         protasi = f'Square(side={self.side})'
         return protasi
     
-    def set_side(self,num) -> None:
-        self.side = num
-        Rectangle.set_height(num)
-        Rectangle.set_width(num)
+    def set_side(self,n) -> None:
+        self.side = n
+        Rectangle.set_width(self,n)
+        Rectangle.set_height(self,n)
+    
+    def set_width(self,n) -> None:
+        self.set_side(n)
+        Rectangle.set_width(self,n)
+    
+    def set_height(self,n) -> None:
+        self.set_side(n)
+        Rectangle.set_height(self,n)
+        
+    
 
-test = Rectangle(3,4)
-print(test.get_diagonal())
-print(test.get_picture())
-print(test)
-test2 = Square(3)
-print(test2.get_area())
-print(test2.get_picture())
+test = Rectangle(15,10)
+test2 = Square(4)
 print(test2)
+test2.set_height(5)
+print(test2)
+print(test.get_amount_inside(test2))

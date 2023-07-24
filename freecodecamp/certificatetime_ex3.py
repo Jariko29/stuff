@@ -49,8 +49,7 @@ class Category:
             amoun = '{:>7.2f}'.format(self.ledger[i]['amount'])
             actual += '{}{}\n'.format(desc,amoun)
         actual += 'Total: {:.2f}\n'.format(self.summ)
-        print(actual)
-        return actual
+    
 
 
 test = Category('Food')
@@ -66,6 +65,7 @@ test2.withdraw(33.40)
 test3.withdraw(10.99)
 test.transfer(20,test2)
 test2.get_balance()
+
 def create_spend_chart(categories):
     lista = []
     listaname = []
